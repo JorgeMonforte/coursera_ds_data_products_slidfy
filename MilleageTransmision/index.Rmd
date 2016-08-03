@@ -1,0 +1,53 @@
+---
+title       : Influence of transmision in car milleage
+subtitle    : Statistical analysis of car mechanics 
+author      : Jorge Monforte Gonzalez
+job         : Mining Engineer
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # 
+widgets     : []            # {mathjax, quiz, bootstrap}
+mode        : selfcontained # {standalone, draft}
+knit        : slidify::knit2slides
+---
+```{r initalization,echo=F,message=F}
+data <- mtcars
+data$transmision <- factor(ifelse(data$am, "auto", "manual"),levels=c("auto", "manual"))
+source('functions.R')
+```
+
+## Summary
+
+1. t test analysis
+2. Linear regresion analysis
+3. Logistic regrsion analysis
+
+--- 
+
+## T test analyisis
+
+```{r test_graph, fig.align="center", fig.height=5, fig.width=7, echo=F, dependson="initialization"} 
+get_test_plot(data)
+t <- t.test(mpg ~ am, paired=FALSE, var.equal=FALSE, data=data)
+```
+
+The *p value*  t test between the two populations is `r t$p.value` so we can discard the hypotesis of being equal.
+
+--- 
+
+## Linear regresion analysis
+```{r linear_reg_graph, fig.align="center", fig.height=5, fig.width=7, echo=F, dependson="initialization"} 
+get_regresion_plot("linear", TRUE)
+```
+
+--- 
+
+## Logistic regresion analysis
+
+```{r logistic_reg_graph, fig.align="center", fig.height=5, fig.width=7, echo=F, dependson="initialization"} 
+get_regresion_plot("logistic", TRUE)
+```
+
+
+
+
